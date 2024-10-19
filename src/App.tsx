@@ -7,6 +7,7 @@ import Analytics from "./pages/analytics";
 import Notifications from "./pages/notifications";
 import Inventory from "./pages/inventory";
 import Register from "./pages/register";
+import Cart from "./pages/cart";
 
 function App() {
   const router = createBrowserRouter([
@@ -33,6 +34,10 @@ function App() {
         {
           path: "inventory",
           element: <Inventory />,
+        },
+        {
+          path: "cart",
+          element: <Cart />,
         },
       ],
     },

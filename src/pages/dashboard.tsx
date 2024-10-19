@@ -1,5 +1,13 @@
+import DashboardHeader from "@/components/dashboard/dashboard-header";
+import ProductsSection from "@/components/products-section";
+
 const Dashboard = () => {
-  return <div className="bg-gray-100 min-h-screen">Dashboard</div>;
+  return (
+    <div className="p-6">
+      <DashboardHeader />
+      <ProductsSection />
+    </div>
+  );
 };
 
 export default Dashboard;
