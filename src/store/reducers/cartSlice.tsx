@@ -28,12 +28,12 @@ const cartSlice = createSlice({
     addToCart: (state, action) => {
       const { item } = action.payload;
       const existingItemIndex = state.cartItems.findIndex(
-        (cartItem: cartItem) => cartItem.id === item._id
+        (cartItem: cartItem) => cartItem.id === item.id
       );
 
       if (existingItemIndex !== -1) {
         state.cartItems[existingItemIndex].quantity++;
-        toast.info("Already in cart. quantity is increased");
+        toast.success("item already in the cart!");
       } else {
         state.cartItems.push({ ...item });
         toast.success("item added to cart!");

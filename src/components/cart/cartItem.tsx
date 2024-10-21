@@ -7,11 +7,14 @@ import {
   increment,
   removeFromCart,
 } from "@/store/reducers/cartSlice";
+import { useAppDispatch } from "@/store/hook";
 
 interface IProps {
   item: cartItem;
 }
 const CartItem = ({ item }: IProps) => {
+  const totalPrice = item.quantity * item.price;
+  const dispatch = useAppDispatch();
   return (
     <div className="border p-4 rounded-lg flex items-center justify-between my-6">
       <div className="flex items-center gap-2">
@@ -28,14 +31,14 @@ const CartItem = ({ item }: IProps) => {
             <Button
               variant="ghost"
               className="p-0 size-3"
-              onClick={() => increment(item.id)}
+              onClick={() => dispatch(increment({ itemId: item.id }))}
             >
               <FaCaretUp />
             </Button>
             <Button
               variant="ghost"
               className="p-0 size-3"
-              onClick={() => decrement(item.id)}
+              onClick={() => dispatch(decrement({ itemId: item.id }))}
             >
               {" "}
               <FaCaretDown />
@@ -43,9 +46,12 @@ const CartItem = ({ item }: IProps) => {
           </div>
         </div>
 
-        <h2 className="font-bold text-sm">{item.price}</h2>
+        <h2 className="font-bold text-sm">{totalPrice}$</h2>
 
-        <Button variant={"ghost"} onClick={() => removeFromCart(item.id)}>
+        <Button
+          variant={"ghost"}
+          onClick={() => dispatch(removeFromCart({ itemId: item.id }))}
+        >
           <MdDeleteOutline size={30} />
         </Button>
       </div>

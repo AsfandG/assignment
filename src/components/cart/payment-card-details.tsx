@@ -47,22 +47,22 @@ const PaymentCardDetails = () => {
       <div className="totals">
         <div className="py-2 flex items-center justify-between text-white text-sm">
           <span>SubTotal</span>
-          <span>{cartData.subtotal}</span>
+          <span>{cartData.subtotal.toFixed(2)}$</span>
         </div>
 
         <div className="py-2 flex items-center justify-between text-white text-sm">
-          <span>Shipping</span>
-          <span>$4</span>
+          <span>Tax</span>
+          <span>{cartData.tax.toFixed(2)}$</span>
         </div>
 
         <div className="py-2 flex items-center justify-between text-white text-sm">
           <span>Total</span>
-          <span>{cartData.total}</span>
+          <span>{cartData.total.toFixed(2)}$</span>
         </div>
       </div>
 
       <div className="flex items-center justify-between rounded-md p-2 mt-6 bg-gray-100 text-sm font-semibold">
-        <span>$1,234</span>
+        <span>{cartData.total}$</span>
         <span className="flex items-center gap-2">
           Checkout <FaLongArrowAltRight />
         </span>

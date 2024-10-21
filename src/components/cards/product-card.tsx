@@ -3,6 +3,8 @@ import { Button } from "../ui/button";
 import { FaHeart, FaStar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/reducers/cartSlice";
+import { useAppSelector } from "@/store/hook";
+import { cartItem } from "@/types/cartItem";
 
 interface IProps {
   product: { id: number; name: string; price: string; image: string };
@@ -18,6 +20,13 @@ const ProductCard = ({ product }: IProps) => {
     };
     dispatch(addToCart({ item }));
   }
+
+  const cartItems = useAppSelector((state) => state.cart.cartItems);
+
+  // Check if the product is in the cart
+  const isInCart = cartItems.some(
+    (cartItem: cartItem) => cartItem.id === product.id
+  );
   return (
     <div className="bg-background ">
       <div className="my-3">
@@ -25,9 +34,23 @@ const ProductCard = ({ product }: IProps) => {
       </div>
 
       <div className="flex">
-        <Button size={"sm"} className="rounded-none" onClick={handleAddToCart}>
-          Add To Cart
-        </Button>
+        {isInCart ? (
+          <Button
+            size={"sm"}
+            className="rounded-none"
+            onClick={handleAddToCart}
+          >
+            In Cart
+          </Button>
+        ) : (
+          <Button
+            size={"sm"}
+            className="rounded-none"
+            onClick={handleAddToCart}
+          >
+            Add To Cart
+          </Button>
+        )}
         <Button size={"sm"} variant={"primary"} className="rounded-none">
           Quick View
         </Button>
@@ -39,7 +62,7 @@ const ProductCard = ({ product }: IProps) => {
           <span>
             <FaHeart className="text-primary" size={15} />
           </span>{" "}
-          <span className="roboto font-semibold">{product.price}</span>
+          <span className="roboto font-semibold">{product.price}$</span>
         </div>
       </div>
 

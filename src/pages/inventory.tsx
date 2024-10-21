@@ -1,5 +1,14 @@
+import toast from "react-hot-toast";
+
 const Inventory = () => {
-  return <div>Inventory</div>;
+  function handleShowToast() {
+    toast.success("Successfully toasted!");
+  }
+  return (
+    <div>
+      <button onClick={handleShowToast}>show toast</button>
+    </div>
+  );
 };
 
 export default Inventory;
