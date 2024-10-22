@@ -16,7 +16,7 @@ const CartItem = ({ item }: IProps) => {
   const totalPrice = item.quantity * item.price;
   const dispatch = useAppDispatch();
   return (
-    <div className="border p-4 rounded-lg flex items-center justify-between my-6">
+    <div className="border p-4 rounded-lg flex flex-col lg:flex-row items-center justify-between my-6">
       <div className="flex items-center gap-2">
         <img src={item.image} alt="shoes" className="size-20" />
         <div>

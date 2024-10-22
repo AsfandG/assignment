@@ -5,7 +5,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 const PaymentCardDetails = () => {
   const { cartData } = useAppSelector((store) => store.cart);
   return (
-    <div className="card-detail w-72 bg-primary p-3 rounded-xl">
+    <div className="card-detail w-full lg:w-72 bg-primary p-3 rounded-xl">
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-semibold text-white">Card Details</h2>
         <img

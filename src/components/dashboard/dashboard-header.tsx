@@ -13,9 +13,9 @@ const DashboardHeader = () => {
         </Link>
       </div>
 
-      <div className="banner-container flex gap-3 h-72">
+      <div className="banner-container flex flex-col md:flex-row gap-3 h-72">
         <div className="banner bg-dimBlack flex-1 rounded-2xl flex gap-6 items-center justify-around p-8">
-          <img src="/images/23.png" alt="shoes" className="w-72 h-56" />
+          <img src="/images/23.png" alt="shoes" className="w-full h-56" />
           <div className="text-white flex items-start flex-col gap-y-3">
             <div className="roboto">
               <h1 className="text-5xl">Essential</h1>
