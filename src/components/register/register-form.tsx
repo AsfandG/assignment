@@ -15,7 +15,10 @@ import {
 } from "@/components/ui/form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser, User } from "@/store/reducers/authSlice";
+import toast from "react-hot-toast";
+import { useAppDispatch } from "@/store/hook";
 
 const FormSchema = z
   .object({
@@ -25,11 +28,11 @@ const FormSchema = z
     name: z.string().min(2, {
       message: "name must be at least 2 characters.",
     }),
-    password: z.string().min(6, {
-      message: "Password must be at least 6 characters.",
+    password: z.string().min(3, {
+      message: "Password must be at least 3 characters.",
     }),
-    confirmPassword: z.string().min(6, {
-      message: "Confirm password must be at least 6 characters.",
+    confirmPassword: z.string().min(3, {
+      message: "Confirm password must be at least 3 characters.",
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -38,6 +41,9 @@ const FormSchema = z
   });
 
 const RegisterForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -46,7 +52,20 @@ const RegisterForm = () => {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    const userExists = users.some((user) => user.name === data.name);
+
+    if (userExists) {
+      toast.error("User already exists!");
+      return;
+    }
+
+    users.push(data);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    dispatch(registerUser(data));
+    toast.success("account created successfully!");
+    navigate("/login");
   }
   return (
     <div className="w-full">

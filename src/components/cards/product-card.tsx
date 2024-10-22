@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/reducers/cartSlice";
 import { useAppSelector } from "@/store/hook";
 import { cartItem } from "@/types/cartItem";
+import { Link } from "react-router-dom";
 
 interface IProps {
   product: { id: number; name: string; price: string; image: string };
@@ -37,7 +38,7 @@ const ProductCard = ({ product }: IProps) => {
         {isInCart ? (
           <Button
             size={"sm"}
-            className="rounded-none"
+            className="rounded-none flex-1"
             onClick={handleAddToCart}
           >
             In Cart
@@ -45,15 +46,17 @@ const ProductCard = ({ product }: IProps) => {
         ) : (
           <Button
             size={"sm"}
-            className="rounded-none"
+            className="rounded-none flex-1"
             onClick={handleAddToCart}
           >
             Add To Cart
           </Button>
         )}
-        <Button size={"sm"} variant={"primary"} className="rounded-none">
-          Quick View
-        </Button>
+        <Link to="/cart" className="block flex-1">
+          <Button size={"sm"} variant={"primary"} className="rounded-none">
+            Quick View
+          </Button>
+        </Link>
       </div>
 
       <div className="info font-normal flex items-center justify-between p-2 border-b">

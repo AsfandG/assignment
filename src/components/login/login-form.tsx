@@ -14,19 +14,31 @@ import {
 } from "@/components/ui/form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { loginUser } from "@/store/reducers/authSlice";
+import { useAppDispatch } from "@/store/hook";
+
+interface UserType {
+  name: string;
+  email: string;
+  password: string;
+}
 
 const FormSchema = z.object({
   email: z.string().min(2, {
     message: "email must be at least 2 characters.",
   }),
 
-  password: z.string().min(6, {
-    message: "Password must be at least 6 characters.",
+  password: z.string().min(3, {
+    message: "Password must be at least 3 characters.",
   }),
 });
 
 const LoginForm = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -35,7 +47,19 @@ const LoginForm = () => {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    const users: UserType[] = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(
+      (user) => user.email === data.email && user.password === data.password
+    );
+
+    if (!user) {
+      toast.error("Invalid credentials");
+      return;
+    }
+
+    dispatch(loginUser(user));
+    navigate("/");
+    toast.success("Login Successfull!");
   }
   return (
     <div className="w-full">

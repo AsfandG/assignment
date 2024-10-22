@@ -1,7 +1,23 @@
 import { sideBarLinks } from "@/constants/data";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Button } from "./ui/button";
+import { IoLogOutOutline } from "react-icons/io5";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
+import { logout } from "@/store/reducers/authSlice";
+import toast from "react-hot-toast";
 
 export const SideBar = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const user = useAppSelector((state) => state.auth.user);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem("user");
+    navigate("/login");
+    toast.success("Logged Out!");
+  };
   return (
     <div className="w-56 flex items-center flex-col py-10">
       <div className="flex items-center gap-2">
@@ -13,8 +29,8 @@ export const SideBar = () => {
           />
         </div>
         <div className="user-info text-sm">
-          <strong>Mark Wood</strong>
-          <p>mark@gmail.com</p>
+          <strong>{user?.name || "Guest"}</strong>
+          <p>{user?.email || "guest@example.com"}</p>
         </div>
       </div>
 
@@ -43,6 +59,10 @@ export const SideBar = () => {
           );
         })}
       </ul>
+
+      <Button variant={"ghost"} className="mt-auto" onClick={handleLogout}>
+        <IoLogOutOutline /> Logout
+      </Button>
     </div>
   );
 };

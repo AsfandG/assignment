@@ -8,6 +8,7 @@ import Notifications from "./pages/notifications";
 import Inventory from "./pages/inventory";
 import Register from "./pages/register";
 import Cart from "./pages/cart";
+import ProtectedRoute from "./components/protected-route";
 
 function App() {
   const router = createBrowserRouter([
@@ -17,7 +18,11 @@ function App() {
       children: [
         {
           path: "",
-          element: <Dashboard />,
+          element: (
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          ),
         },
         {
           path: "products",
